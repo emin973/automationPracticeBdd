@@ -18,7 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.junit.Assert.*;
 
-public final class DriverHelper {
+public class DriverHelper {
 	
     private String mainWindowhandle;
     private WebDriver driver;
@@ -56,6 +56,10 @@ public final class DriverHelper {
         return driver.findElements(by);
     }
     
+    public void clickByLinkText ( String linkText, int timeOutInSeconds ) {
+    	click(By.linkText(linkText), timeOutInSeconds);
+    }
+    
     public void click ( By by, int timeOutInSeconds ) {
         getElement(by, timeOutInSeconds).click();
 //        Reporter.step.info("Clicked on element");
@@ -76,7 +80,9 @@ public final class DriverHelper {
     }
     
     public void sendKeys ( By by, String text, int timeOutInSeconds ) {
-        getElement(by, timeOutInSeconds).sendKeys(text);
+    	WebElement textBox = getElement(by, timeOutInSeconds);
+    	textBox.clear();
+        textBox.sendKeys(text);
     }
     
     public String getText ( By by, int timeOutInSeconds ) {
@@ -196,3 +202,5 @@ public final class DriverHelper {
 		}
 	}
 }
+
+

@@ -8,22 +8,23 @@ public final class TestDataGenerator {
 
 	private static Logger logger = Logger.getLogger(TestDataGenerator.class);
 	private static Faker faker = new Faker();
-	
-	private TestDataGenerator () {}
-	
-	public static String getRandomFirstName () {
+
+	private TestDataGenerator() {
+	}
+
+	public static String getRandomFirstName() {
 		String randomFirstName = faker.firstName();
 		logger.info("random first name generated : " + randomFirstName);
 		return randomFirstName;
 	}
-	
-	public static String getRandomLastName () {
+
+	public static String getRandomLastName() {
 		String randomLastName = faker.lastName();
 		logger.info("random last name generated : " + randomLastName);
 		return randomLastName;
 	}
 
-	public static String getRandomEmail( String firstName, String lastName ) {
+	public static String getRandomEmail(String firstName, String lastName) {
 		String[] emails = { "@gmail.com", "@yahoo.com", "@hotmail.com", "@aol.com", "@hotmail.co.uk", "@hotmail.fr",
 				"@msn.com", "@yahoo.fr", "@wanadoo.fr", "@orange.fr", "@comcast.net", "@yahoo.co.uk", "@yahoo.com.br",
 				"@yahoo.co.in", "@live.com", "@rediffmail.com", "@free.fr", "@gmx.de", "@web.de", "@yandex.ru",
@@ -40,10 +41,25 @@ public final class TestDataGenerator {
 				"@juno.com", "@optusnet.com.au", "@blueyonder.co.uk", "@bluewin.ch", "@skynet.be", "@sympatico.ca",
 				"@windstream.net", "@mac.com", "@centurytel.net", "@chello.nl", "@live.ca", "@aim.com",
 				"@bigpond.net.au" };
-		return (firstName + "." + lastName + emails [ getRandomInt(0, (emails.length - 1)) ]).toLowerCase();
+		return (firstName + "." + lastName + emails[getRandomInt(0, (emails.length - 1))]).toLowerCase();
 	}
-	
-	public static int getRandomInt ( int min, int max ) {
-        return (int)(Math.random() * (( max - min ) + 1 )) + min;
-    }
+
+	public static int getRandomInt(int min, int max) {
+		return (int) (Math.random() * ((max - min) + 1)) + min;
+	}
+
+	public static String getRandomText(int numberOfCharacters) {
+		if (numberOfCharacters <= 0)
+			Common.failTest("Number of characters can not be <= 0");
+
+		StringBuilder stringBuilder = new StringBuilder();
+		boolean isText = true;
+		while (isText) {
+			int textLength = stringBuilder.append(faker.paragraph()).length();
+			isText = textLength < numberOfCharacters;
+		}
+
+		return stringBuilder.substring(0, numberOfCharacters).replace("\\s+", " ").trim();
+	}
+
 }

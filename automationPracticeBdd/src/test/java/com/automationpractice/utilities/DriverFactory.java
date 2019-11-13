@@ -19,6 +19,7 @@ final class DriverFactory {
 	private static WebDriver driver;
 	
 	static WebDriver getDriver () {
+		System.out.println(driver);
 		if ( driver == null ) driver = getActiveDriver();
 		return driver;
 //		return driver == null ? getActiveDriver() : driver;
@@ -37,14 +38,12 @@ final class DriverFactory {
 		switch ( browserType ) {
 			case "chrome":
 				driver = getChromeDriver();
-				driver.manage().window().maximize();
 				break;
 			case "chrome-headless":
 				driver = getHeadlessChromeDriver();
 				break;
 			case "firefox":
 				driver = getFirefoxDriver();
-				driver.manage().window().maximize();
 				break;
 			default: System.out.println("Browser type " + browserType + " invalid");
 				break;
